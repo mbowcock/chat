@@ -1,4 +1,4 @@
-chattr
+chat
 ======
 
 Chat app in clojure in clojurescript
