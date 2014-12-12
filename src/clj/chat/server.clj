@@ -1,4 +1,5 @@
 (ns chat.server
+  (:use (compojure handler [core :only (GET POST defroutes)]))
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.resource :as resources]
             [ring.util.response :as response])
@@ -21,14 +22,18 @@
         "</body>"
         "</html>")})
 
-(defn handler [request]
-  (if (= "/" (:uri request))
-      (response/redirect "/help.html")
-      (render-app)))
+;;(defn handler [request]
+  ;;(if (= "/" (:uri request))
+      ;;(response/redirect "/help.html")
+      ;;(render-app)))
+(defroutes app
+  (GET "/" request "Hello")
+  (GET "/message" request "Retrieving messages")
+  (POST "/message" request "Posting message"))
 
-(def app 
-  (-> handler
-    (resources/wrap-resource "public")))
+;;(def app 
+  ;;(-> handler
+    ;;(resources/wrap-resource "public")))
 
 (defn -main [& args]
   (jetty/run-jetty app {:port 3000}))
